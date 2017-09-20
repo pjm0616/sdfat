@@ -119,7 +119,8 @@ s32 bdev_readahead(struct super_block *sb, u32 secno, u32 num_secs)
 	blk_start_plug(&plug);
 	for (i = 0; i < num_secs; i++) {
 		if (i && !(i & (sects_per_page - 1)))
-			blk_flush_plug(current);
+			//blk_flush_plug(current); // Not exported
+			printk("sdfat: WARN: blk_flush_plug stub at %s:%d (%s)\n", __FILE__, __LINE__, __func__);
 		sb_breadahead(sb, secno + i);
 	}
 	blk_finish_plug(&plug);
